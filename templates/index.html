@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Léxico y Sintáctico</title>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        .textarea {
+            resize: vertical;
+        }
+        .table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h1 class="title has-text-centered">Analizador Léxico y Sintáctico</h1>
+            <form method="POST">
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea" name="code" rows="10" placeholder="Escribe tu código aquí...">{{ request.form.code if request.method == 'POST' else '' }}</textarea>
+                    </div>
+                </div>
+                <div class="field has-text-centered">
+                    <div class="control">
+                        <input type="submit" class="button is-primary" value="Analizar">
+                    </div>
+                </div>
+            </form>
+            <div class="result">
+                <h2 class="subtitle">Análisis Léxico</h2>
+                <table class="table is-striped is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Línea</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for token in tokens %}
+                        <tr>
+                            <td>{{ token.line }}</td>
+                            <td>{{ token.type }}</td>
+                            <td>{{ token.value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <h2 class="subtitle">Reporte Sintáctico y semantico </h2>
+                <p>{{ syntax_result }}</p>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
